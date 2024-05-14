@@ -37,6 +37,7 @@
 /////////////containers
 
     var container_a = new Container({
+        size: { width: 300, height: 300 },
         z: 1,
         attrs: { headerText: { text: 'key = custormerID' }},
     },);
@@ -83,7 +84,7 @@
 
     var child_5 = new Child({
         z: 4,
-        position: { x: 400, y: 270 },
+        position: { x: 400, y: 280 },
         attrs: { headerText: { text: 'order' }}
     });
     var child_6 = new Child({
@@ -136,10 +137,10 @@
     ]);
     
     container_a.embed([child_1, child_2, child_3,  container_b/*,container_c*/]);
-    container_b.embed([child_4/*,container_c,child_5*/]);
+    container_b.embed([child_4/*,container_c*/]);
     container_c.embed([child_6]);
     child_4.embed([child_5]);
-
+    child_5.fitAncestorElements();
 
     /* link_1_2.reparent();
     link_1_3.reparent();
@@ -153,6 +154,7 @@
     container_a.toggle(false);
     container_c.toggle(false);
 
+    
     paper.on('element:button:pointerdown', function(elementView) {
         var element = elementView.model;
         // `toggle()` method is defined at `joint.shapes.container.Parent` in `./joint.shapes.container.js`
@@ -166,14 +168,8 @@
         // `fitAncestorElements()` method is defined at `joint.shapes.container.Base` in `./joint.shapes.container.js`
         element.fitAncestorElements();
     });
-    
-    
-    // paper.on('element:position', function(elementView) {
-    //     var element = elementView.model;
-    //     // `fitAncestorElements()` method is defined at `joint.shapes.container.Base` in `./joint.shapes.container.js`
-    //     element.fitAncestorElements();
-    // });
 
 
+ 
 
 })(joint);
