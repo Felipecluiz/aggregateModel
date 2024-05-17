@@ -54,6 +54,18 @@
     });
 
 
+    var container_d = new Container({
+        z: 3,
+        size: { width: 50, height: 50 },
+        attrs: { headerText: { text: 'value = d' }}
+    });
+
+    var container_e = new Container({
+        z: 3,
+        size: { width: 50, height: 50 },
+        attrs: { headerText: { text: 'value = e' }}
+    });
+
 
     ///////////////childs
 
@@ -61,7 +73,7 @@
     var child_1 = new Child({
         z: 2,
         position: { x: 250, y: 150 },
-        attrs: { headerText: { text: 'order' }}
+        attrs: { headerText: { text: 'order1' }}
     });
 
     var child_2 = new Child({
@@ -73,24 +85,24 @@
     var child_3 = new Child({
         z: 2,
         position: { x: 300, y: 250 },
-        attrs: { headerText: { text: 'order' }}
+        attrs: { headerText: { text: 'order3' }}
     });
 
     var child_4 = new Child({
         z: 4,
         position: { x: 400, y: 290 },
-        attrs: { headerText: { text: 'order' }}
+        attrs: { headerText: { text: 'order4' }}
     });
 
     var child_5 = new Child({
         z: 4,
-        position: { x: 400, y: 280 },
-        attrs: { headerText: { text: 'order' }}
+        position: { x: 500, y: 180 },
+        attrs: { headerText: { text: 'order5' }}
     });
     var child_6 = new Child({
         z: 4,
-        position: { x: 300, y: 180 },
-        attrs: { headerText: { text: 'order' }}
+        position: { x: 350, y: 180 },
+        attrs: { headerText: { text: 'order6' }}
     });
 
 
@@ -131,16 +143,18 @@
         target: { id: container_c.id }
     });
     graph.addCells([
-        container_a, container_b,container_c,
+        container_a, container_b,container_c, container_d,container_e,
         child_1, child_2, child_3, child_4, child_5,child_6,
         /*link_1_2, link_1_3, link_4_5, link_1_b,link_1_c*/
     ]);
+
     
-    container_a.embed([child_1, child_2, child_3,  container_b/*,container_c*/]);
+    container_a.embed([/*child_1*/, child_2, child_3,  container_b,container_c]);
     container_b.embed([child_4/*,container_c*/]);
     container_c.embed([child_6]);
     child_4.embed([child_5]);
     child_5.fitAncestorElements();
+    //child_1.fitAncestorElements();
 
     /* link_1_2.reparent();
     link_1_3.reparent();
@@ -153,6 +167,9 @@
     container_b.toggle(false);
     container_a.toggle(false);
     container_c.toggle(false);
+    container_d.toggle(false);
+    container_e.toggle(false);
+    
 
     
     paper.on('element:button:pointerdown', function(elementView) {
@@ -163,12 +180,43 @@
         element.fitAncestorElements();
     });
 
-    paper.on('element:pointermove', function(elementView) {
+    paper.on('element:mouseenter', function(elementView) {
         var element = elementView.model;
         // `fitAncestorElements()` method is defined at `joint.shapes.container.Base` in `./joint.shapes.container.js`
         element.fitAncestorElements();
     });
+ 
+    paper.on('element:mouseover', function(elementView) {
+        var element = elementView.model;
 
+        if ((child_3.position().x < child_1.position().x) && (child_3.position().x+child_3.size().width > child_1.position().x)
+        &&   (child_3.position().y < child_1.position().y) && (child_3.position().y+child_3.size().height > child_1.position().y)){
+            //alert("teste");
+            //console.log("entrou")
+            child_3.embed([child_1]);
+            //child_1.fitAncestorElements();
+            element.fitAncestorElements();
+
+
+        }
+
+    });
+
+    paper.on('element:mouseover', function(elementView) {
+        var element = elementView.model;
+
+        if ((container_d.position().x < container_e.position().x) && (container_d.position().x+container_d.size().width > container_e.position().x)
+        &&   (container_d.position().y < container_e.position().y) && (container_d.position().y+container_d.size().height > container_e.position().y)){
+            //alert("teste");
+            //console.log("entrou")
+            container_d.embed([container_e]);
+            //child_1.fitAncestorElements();
+            element.fitAncestorElements();
+
+
+        }
+
+    });
 
  
 

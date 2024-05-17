@@ -148,7 +148,7 @@
     );
 
     joint.shapes.container.Base.define('container.Parent', {
-        collapsed: false,
+        //collapsed: false,
         attrs: {
             root: {
                 magnetSelector: 'body'
