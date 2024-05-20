@@ -36,36 +36,37 @@
 
 /////////////containers
 
-    var container_a = new Container({
+    var container_1 = new Container({
         size: { width: 300, height: 300 },
         z: 1,
         attrs: { headerText: { text: 'key = custormerID' }},
     },);
-    var container_b = new Container({
+    var container_2 = new Container({
         z: 3,
         size: { width: 50, height: 50 },
         attrs: { headerText: { text: 'value = object' }}
     });
 
-    var container_c = new Container({
+    var container_3 = new Container({
         z: 3,
         size: { width: 50, height: 50 },
         attrs: { headerText: { text: 'order' }}
     });
 
 
-    var container_d = new Container({
+    var container_4 = new Container({
         z: 3,
         size: { width: 50, height: 50 },
         attrs: { headerText: { text: 'value = d' }}
     });
 
-    var container_e = new Container({
+    var container_5 = new Container({
         z: 3,
         size: { width: 50, height: 50 },
         attrs: { headerText: { text: 'value = e' }}
     });
-
+    var containers = [];
+    containers.push(container_1,container_2,container_3,container_4,container_5);  
 
     ///////////////childs
 
@@ -134,24 +135,24 @@
     var link_1_b = new Link({
         z: 4,
         source: { id: child_1.id },
-        target: { id: container_b.id }
+        target: { id: container_2.id }
     });
 
     var link_1_c = new Link({
         z: 4,
         source: { id: child_1.id },
-        target: { id: container_c.id }
+        target: { id: container_3.id }
     });
     graph.addCells([
-        container_a, container_b,container_c, container_d,container_e,
+        container_1, container_2,container_3, container_4,container_5,
         child_1, child_2, child_3, child_4, child_5,child_6,
         /*link_1_2, link_1_3, link_4_5, link_1_b,link_1_c*/
     ]);
 
     
-    container_a.embed([/*child_1*/, child_2, child_3,  container_b,container_c]);
-    container_b.embed([child_4/*,container_c*/]);
-    container_c.embed([child_6]);
+    container_1.embed([/*child_1*/, child_2, child_3,  container_2,container_3]);
+    container_2.embed([child_4/*,container_3*/]);
+    container_3.embed([child_6]);
     child_4.embed([child_5]);
     child_5.fitAncestorElements();
     //child_1.fitAncestorElements();
@@ -164,11 +165,11 @@
     */
 
     // `toggle()` method is defined at `joint.shapes.container.Parent` in `./joint.shapes.container.js`
-    container_b.toggle(false);
-    container_a.toggle(false);
-    container_c.toggle(false);
-    container_d.toggle(false);
-    container_e.toggle(false);
+    container_2.toggle(false);
+    container_1.toggle(false);
+    container_3.toggle(false);
+    container_4.toggle();
+    container_5.toggle();
     
 
     
@@ -180,15 +181,14 @@
         element.fitAncestorElements();
     });
 
-    paper.on('element:mouseenter', function(elementView) {
+    paper.on('cell:mouseover', function(elementView) {
         var element = elementView.model;
         // `fitAncestorElements()` method is defined at `joint.shapes.container.Base` in `./joint.shapes.container.js`
         element.fitAncestorElements();
     });
  
-    paper.on('element:mouseover', function(elementView) {
+    paper.on('cell:mouseenter', function(elementView) {
         var element = elementView.model;
-
         if ((child_3.position().x < child_1.position().x) && (child_3.position().x+child_3.size().width > child_1.position().x)
         &&   (child_3.position().y < child_1.position().y) && (child_3.position().y+child_3.size().height > child_1.position().y)){
             //alert("teste");
@@ -202,19 +202,22 @@
 
     });
 
-    paper.on('element:mouseover', function(elementView) {
+    paper.on('cell:mouseenter', function(elementView) {
         var element = elementView.model;
+        i=1;
+        for (i=1; i < 4;i++){
 
-        if ((container_d.position().x < container_e.position().x) && (container_d.position().x+container_d.size().width > container_e.position().x)
-        &&   (container_d.position().y < container_e.position().y) && (container_d.position().y+container_d.size().height > container_e.position().y)){
-            //alert("teste");
-            //console.log("entrou")
-            container_d.embed([container_e]);
-            //child_1.fitAncestorElements();
-            element.fitAncestorElements();
+            if ((containers[i].position().x < (containers[i+1]).position().x) && (containers[i].position().x+containers[i].size().width > (containers[i+1]).position().x)
+            &&   (containers[i].position().y < (containers[i+1]).position().y) && (containers[i].position().y+containers[i].size().height > (containers[i+1]).position().y)){
+                //alert("teste");
+                //console.log("entrou")
+                containers[i].embed([containers[i+1]]);
+                //child_1.fitAncestorElements();
+                element.fitAncestorElements();
 
 
-        }
+
+            }}
 
     });
 
